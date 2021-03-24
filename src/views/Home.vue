@@ -8,12 +8,28 @@
 
 <script>
 import navBar from "components/common/navbar/NavBar";
+
+import { getHomeDatas } from "network/home.js";
+
 export default {
   data() {
-    return {};
+    return {
+      banner: [],
+      dKeyword: [],
+      keywords: [],
+      recommend: [],
+    };
   },
   components: {
     navBar,
+  },
+  created() {
+    getHomeDatas().then((res) => {
+      this.banner = res.data.data.banner.list;
+      this.dKeyword = res.data.data.dKeyword.list;
+      this.keywords = res.data.data.keywords.list;
+      this.recommend = res.data.data.recommend.list;
+    });
   },
 };
 </script>
