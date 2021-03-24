@@ -1,0 +1,44 @@
+@import './normalize.css';
+
+@text-color:#666;
+@high-text-color:#ff5777;
+@tint-color:#ff8198;
+@background-color:#fff;
+@font-size:14px;
+@line-height:1.5;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+//采用的是京东的初始化 m.jd.com
+body {
+  margin: 0 auto;
+  min-width: 320px;
+  max-width: 540px;
+  background: #fff;
+  font-size: 14px;
+  font-family: -apple-system,Helvetica,sans-serif;
+  line-height: 1.5;
+  color: #666;
+  -webkit-text-size-adjust: 100%!important;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+//双伪元素清楚浮动
+.clearfix::before,
+.clearfix::after {
+    content: "";
+    display: table;//转换为块级元素并一行显示
+}
+
+.clearfix::after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
