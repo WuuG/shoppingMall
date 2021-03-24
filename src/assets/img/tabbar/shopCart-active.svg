@@ -1,1 +1,18 @@
-<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg t="1616156808518" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="786" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><defs><style type="text/css"></style></defs><path d="M888.32 332.8H263.68l-25.6-110.08c-10.24-46.08-51.2-81.92-99.84-81.92H102.4c-38.4 0-69.12 43.52-38.4 84.48 7.68 10.24 20.48 17.92 35.84 17.92h40.96l81.92 378.88c15.36 71.68 76.8 120.32 151.04 120.32h384c61.44 0 125.44-40.96 143.36-99.84 12.8-40.96 20.48-87.04 28.16-128 5.12-23.04 12.8-69.12 20.48-110.08 5.12-38.4-25.6-71.68-61.44-71.68zM332.8 921.6a76.8 76.8 0 1 0 0-153.6 76.8 76.8 0 0 0 0 153.6zM793.6 921.6a76.8 76.8 0 1 0 0-153.6 76.8 76.8 0 0 0 0 153.6z" p-id="787" fill="#d81e06"></path></svg>
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="44.000000pt" height="44.000000pt" viewBox="0 0 44.000000 44.000000"
+ preserveAspectRatio="xMidYMid meet">
+<metadata>
+Created by potrace 1.15, written by Peter Selinger 2001-2017
+</metadata>
+<g transform="translate(0.000000,44.000000) scale(0.100000,-0.100000)"
+fill="#ff5777" stroke="none">
+<path d="M0 405 c0 -8 6 -15 14 -15 21 0 23 -6 46 -136 31 -181 13 -165 187
+-162 187 4 194 21 11 28 -116 4 -133 7 -136 22 -3 16 9 18 136 18 100 0 142 4
+149 13 18 22 35 158 22 173 -9 11 -49 14 -180 14 -156 0 -169 1 -169 18 0 26
+-20 42 -52 42 -18 0 -28 -5 -28 -15z m394 -83 c2 -4 -1 -35 -7 -67 l-12 -60
+-131 -3 -132 -3 -11 64 c-6 35 -11 67 -11 70 0 10 298 9 304 -1z"/>
+</g>
+</svg>

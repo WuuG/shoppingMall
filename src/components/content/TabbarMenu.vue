@@ -43,12 +43,12 @@
 </template>
 
 <script>
-import tabBar from "../../components/common/tabBar/TabBar";
-import tabBarItem from "../../components/common/tabBar/TabBarItem";
+import tabBar from "components/common/tabBar/TabBar";
+import tabBarItem from "components/common/tabBar/TabBarItem";
 export default {
   data() {
     return {
-      color: "#d81e06",
+      color: "#ff5777",
     };
   },
   components: {
