@@ -2,12 +2,12 @@
   <div class="tab-bar-item" @click="toPath(path)" :style="isActive">
     <div v-show="isShow">
       <slot name="img">
-        <img src="~assets/img/home.svg" alt="" />
+        <img src="~assets/img/tabbar/home.svg" alt="" />
       </slot>
     </div>
     <div v-show="!isShow">
       <slot name="img-active">
-        <img src="~assets/img/home-active.svg" alt="" />
+        <img src="~assets/img/tabbar/home.svg" alt="" />
       </slot>
     </div>
     <!-- 在所用的template内，使用v-bind:传给父组件的参数(这里是可以自定义的)="子组件的参数"
@@ -55,7 +55,6 @@ export default {
   methods: {
     toPath(path) {
       if (this.$route.path != path) {
-        console.log(this.$route);
         this.$router.replace(path);
       }
     },

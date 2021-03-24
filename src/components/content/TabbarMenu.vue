@@ -5,40 +5,46 @@
       在本例中, 自定义slot a是子组件传递来的参数 故可以表示为slot.a -->
       <template v-slot:text="slot">{{ slot.a.second }}</template>
       <!-- 标签内部别名的使用 -->
-      <template v-slot:img><img src="~assets/img/home.svg" alt="" /></template>
-      <template v-slot:img-active
-        ><img src="~assets/img/home-active.svg" alt=""
+      <template v-slot:img
+        ><img src="~assets/img/tabbar/home.svg" alt=""
       /></template>
+      <template v-slot:img-active>
+        <img src="~assets/img/tabbar/home-active.svg" alt="" />
+      </template>
     </tab-bar-item>
     <tab-bar-item :path="'/see'" :color="color">
       <template v-slot:text>发现</template>
-      <template v-slot:img><img src="~assets/img/eye.svg" alt="" /></template>
-      <template v-slot:img-active
-        ><img src="~assets/img/eye-active.svg" alt=""
+      <template v-slot:img
+        ><img src="~assets/img/tabbar/eye.svg" alt=""
       /></template>
+      <template v-slot:img-active>
+        <img src="~assets/img/tabbar/eye-active.svg" alt="" />
+      </template>
     </tab-bar-item>
     <tab-bar-item :path="'/cart'" :color="color">
       <template v-slot:text>购物车</template>
-      <template v-slot:img
-        ><img src="~assets/img/shopCart.svg" alt=""
-      /></template>
-      <template v-slot:img-active
-        ><img src="~assets/img/shopCart-active.svg" alt=""
-      /></template>
+      <template v-slot:img>
+        <img src="~assets/img/tabbar/shopCart.svg" alt="" />
+      </template>
+      <template v-slot:img-active>
+        <img src="~assets/img/tabbar/shopCart-active.svg" alt="" />
+      </template>
     </tab-bar-item>
     <tab-bar-item :path="'/profile'" :color="color">
       <template v-slot:text>我的</template>
-      <template v-slot:img><img src="~assets/img/user.svg" alt="" /></template>
-      <template v-slot:img-active
-        ><img src="~assets/img/user-active.svg" alt=""
+      <template v-slot:img
+        ><img src="~assets/img/tabbar/user.svg" alt=""
       /></template>
+      <template v-slot:img-active>
+        <img src="~assets/img/tabbar/user-active.svg" alt="" />
+      </template>
     </tab-bar-item>
   </tab-bar>
 </template>
 
 <script>
-import tabBar from "./common/tabBar/TabBar";
-import tabBarItem from "./common/tabBar/TabBarItem";
+import tabBar from "../../components/common/tabBar/TabBar";
+import tabBarItem from "../../components/common/tabBar/TabBarItem";
 export default {
   data() {
     return {
