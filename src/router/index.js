@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from 'views/Home.vue'
+import home from 'views/home/Home.vue'
 import see from 'views/see.vue'
 import profile from 'views/Profile.vue'
 import cart from 'views/Cart.vue'

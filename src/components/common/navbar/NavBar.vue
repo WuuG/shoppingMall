@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  name: "navBar",
   data() {
     return {};
   },

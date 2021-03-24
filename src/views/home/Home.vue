@@ -3,11 +3,13 @@
     <nav-bar class="nav-bar">
       <template v-slot:mid>首页</template>
     </nav-bar>
+    <home-swiper :banner="banner"></home-swiper>
   </div>
 </template>
 
 <script>
 import navBar from "components/common/navbar/NavBar";
+import homeSwiper from "./childComps/HomeSwiper";
 
 import { getHomeDatas } from "network/home.js";
 
@@ -22,6 +24,7 @@ export default {
   },
   components: {
     navBar,
+    homeSwiper,
   },
   created() {
     getHomeDatas().then((res) => {
@@ -35,7 +38,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "../assets/css/base.less";
+@import "~assets/css/base.less";
 .nav-bar {
   text-align: center;
   color: #fff;
