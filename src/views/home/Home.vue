@@ -3,14 +3,17 @@
     <nav-bar class="nav-bar">
       <template v-slot:mid>首页</template>
     </nav-bar>
-    <home-swiper :banner="banner" class="swiper"></home-swiper>
+    <!-- 这里的class千万不能用swiper呀，swiper内部已经有这个类名了，而轮播图挂载的时候，还会用这个类，所以会报错的哦 -->
+    <home-swiper :banner="banner" class="content"></home-swiper>
     <home-recommend :recommend="recommend"></home-recommend>
     <week-pop></week-pop>
+    <tab-ctrl :tabTypes="['流 行', '新 品', '热 销']"></tab-ctrl>
   </div>
 </template>
 
 <script>
 import navBar from "components/common/navbar/NavBar";
+import tabCtrl from "components/content/tabCtrl/TabCtrl";
 
 import homeSwiper from "./childComps/HomeSwiper";
 import homeRecommend from "./childComps/HomeRecommend";
@@ -29,6 +32,7 @@ export default {
   },
   components: {
     navBar,
+    tabCtrl,
     homeSwiper,
     homeRecommend,
     weekPop,
@@ -58,7 +62,7 @@ export default {
 }
 #home {
   height: 1200px;
-  .swiper {
+  .content {
     padding-top: 44px;
   }
 }

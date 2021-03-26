@@ -36,6 +36,7 @@ export default {
     }
     p {
       color: @text-color;
+      font-size: 12px;
     }
   }
 }

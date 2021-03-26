@@ -76,6 +76,7 @@ export default {
     handleDom() {
       let swiper = document.querySelector(".swiper");
       let swipers = document.querySelectorAll(".slider");
+
       this.slideCount = swipers.length;
       if (this.slideCount > 1) {
         let preItem = swipers[0].cloneNode(true); //硬克隆
