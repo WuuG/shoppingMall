@@ -1,18 +1,20 @@
 <template>
-  <div>
+  <div id="home">
     <nav-bar class="nav-bar">
       <template v-slot:mid>首页</template>
     </nav-bar>
-    <home-swiper :banner="banner"></home-swiper>
+    <home-swiper :banner="banner" class="swiper"></home-swiper>
     <home-recommend :recommend="recommend"></home-recommend>
+    <week-pop></week-pop>
   </div>
 </template>
 
 <script>
 import navBar from "components/common/navbar/NavBar";
-import homeSwiper from "./childComps/HomeSwiper";
 
+import homeSwiper from "./childComps/HomeSwiper";
 import homeRecommend from "./childComps/HomeRecommend";
+import weekPop from "./childComps/WeekPop";
 
 import { getHomeDatas } from "network/home.js";
 
@@ -29,6 +31,7 @@ export default {
     navBar,
     homeSwiper,
     homeRecommend,
+    weekPop,
   },
   created() {
     this.getHomeDatas();
@@ -52,5 +55,11 @@ export default {
   text-align: center;
   color: #fff;
   background-color: @tint-color;
+}
+#home {
+  height: 1200px;
+  .swiper {
+    padding-top: 44px;
+  }
 }
 </style>
