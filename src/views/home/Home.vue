@@ -7,15 +7,18 @@
     <home-swiper :banner="banner" class="content"></home-swiper>
     <home-recommend :recommend="recommend"></home-recommend>
     <week-pop></week-pop>
-    <tab-ctrl :tabTypes="['流 行', '新 品', '热 销']"></tab-ctrl>
-    <goods :good="goods['pop']" />
+    <tab-ctrl
+      :tabTypes="['流行', '新品', '热销']"
+      @tabClick="setCurrentIndex"
+    ></tab-ctrl>
+    <goods :good="goods[tabTypes[currentIndex]]" />
   </div>
 </template>
 
 <script>
 import navBar from "components/common/navbar/NavBar";
 import tabCtrl from "components/content/tabCtrl/TabCtrl";
-import goods from "../../components/content/goods/Goods";
+import goods from "components/content/goods/Goods";
 
 import homeSwiper from "./childComps/HomeSwiper";
 import homeRecommend from "./childComps/HomeRecommend";
@@ -30,12 +33,15 @@ export default {
       banner: [],
       recommend: [],
       goods: {
-        pop: { page: 0, list: [] },
-        new: { page: 0, list: [] },
-        sell: { page: 0, list: [] },
+        pop: { page: 0, list: [] }, // 对应流行
+        new: { page: 0, list: [] }, //对应新品
+        sell: { page: 0, list: [] }, //对应热销
       },
+      currentIndex: 0,
+      tabTypes: ["pop", "new", "sell"],
     };
   },
+
   components: {
     navBar,
     tabCtrl,
@@ -51,6 +57,9 @@ export default {
     this.getGoods("sell", 1);
   },
   methods: {
+    /*
+     **  网络请求相关方法
+     */
     getHomeDatas() {
       getHomeDatas().then((res) => {
         this.banner = res.data.data.banner.list;
@@ -61,6 +70,13 @@ export default {
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list = res.data.data.list;
       });
+    },
+    /*
+     **  其他方法
+     */
+    //  index from TabCtrl.vue custom events
+    setCurrentIndex(index) {
+      this.currentIndex = index;
     },
   },
 };
