@@ -56,7 +56,6 @@ export default {
   //挂载后开始设置轮播图的图片。前后都要添加一个
   mounted() {
     //操作dom添加图片
-    console.log(11);
     setTimeout(() => {
       this.handleDom();
       this.starTimer();

@@ -4,12 +4,15 @@
       <template v-slot:mid>首页</template>
     </nav-bar>
     <home-swiper :banner="banner"></home-swiper>
+    <home-recommend :recommend="recommend"></home-recommend>
   </div>
 </template>
 
 <script>
 import navBar from "components/common/navbar/NavBar";
 import homeSwiper from "./childComps/HomeSwiper";
+
+import homeRecommend from "./childComps/HomeRecommend";
 
 import { getHomeDatas } from "network/home.js";
 
@@ -25,14 +28,20 @@ export default {
   components: {
     navBar,
     homeSwiper,
+    homeRecommend,
   },
   created() {
-    getHomeDatas().then((res) => {
-      this.banner = res.data.data.banner.list;
-      this.dKeyword = res.data.data.dKeyword.list;
-      this.keywords = res.data.data.keywords.list;
-      this.recommend = res.data.data.recommend.list;
-    });
+    this.getHomeDatas();
+  },
+  methods: {
+    getHomeDatas() {
+      getHomeDatas().then((res) => {
+        this.banner = res.data.data.banner.list;
+        this.dKeyword = res.data.data.dKeyword.list;
+        this.keywords = res.data.data.keywords.list;
+        this.recommend = res.data.data.recommend.list;
+      });
+    },
   },
 };
 </script>
