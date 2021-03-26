@@ -74,6 +74,7 @@ export default {
       }
     },
     handleDom() {
+      //这里直接用这个获取元素应该不太合适，可以用ref来获取，然后通过$children来获取slider
       let swiper = document.querySelector(".swiper");
       let swipers = document.querySelectorAll(".slider");
 

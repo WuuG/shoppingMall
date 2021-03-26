@@ -52,9 +52,10 @@ export default {
   },
   created() {
     this.getHomeDatas();
-    this.getGoods("pop", 1);
-    this.getGoods("new", 1);
-    this.getGoods("sell", 1);
+    //这里用goods的page比较合适一点，当然直接用1也是可以的
+    this.getGoods("pop");
+    this.getGoods("new");
+    this.getGoods("sell");
   },
   methods: {
     /*
@@ -66,13 +67,17 @@ export default {
         this.recommend = res.data.data.recommend.list;
       });
     },
-    getGoods(type, page) {
+    //这种函数的封装方法可能不太好啊,应该到底下去再封装一层。因为这个函数是要不断调用的。（其实就是为了数据加载啦）
+    getGoods(type) {
+      const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then((res) => {
-        this.goods[type].list = res.data.data.list;
+        //这里不加...
+        this.goods[type].list.push(...res.data.data.list);
+        this.goods[type].page++;
       });
     },
     /*
-     **  其他方法
+     **  事件监听方法
      */
     //  index from TabCtrl.vue custom events
     setCurrentIndex(index) {

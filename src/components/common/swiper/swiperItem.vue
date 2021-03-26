@@ -14,7 +14,6 @@ export default {
 .slider {
   width: 100%;
   flex-shrink: 0; //不允许flex元素进行压缩
-  background-color: seagreen;
 }
 .slider img {
   width: 100%;
