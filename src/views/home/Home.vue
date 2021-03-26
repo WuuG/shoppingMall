@@ -8,45 +8,58 @@
     <home-recommend :recommend="recommend"></home-recommend>
     <week-pop></week-pop>
     <tab-ctrl :tabTypes="['流 行', '新 品', '热 销']"></tab-ctrl>
+    <goods :good="goods['pop']" />
   </div>
 </template>
 
 <script>
 import navBar from "components/common/navbar/NavBar";
 import tabCtrl from "components/content/tabCtrl/TabCtrl";
+import goods from "../../components/content/goods/Goods";
 
 import homeSwiper from "./childComps/HomeSwiper";
 import homeRecommend from "./childComps/HomeRecommend";
 import weekPop from "./childComps/WeekPop";
 
-import { getHomeDatas } from "network/home.js";
+import { getHomeDatas, getHomeGoods } from "network/home.js";
 
 export default {
+  name: "home",
   data() {
     return {
       banner: [],
-      dKeyword: [],
-      keywords: [],
       recommend: [],
+      goods: {
+        pop: { page: 0, list: [] },
+        new: { page: 0, list: [] },
+        sell: { page: 0, list: [] },
+      },
     };
   },
   components: {
     navBar,
     tabCtrl,
+    goods,
     homeSwiper,
     homeRecommend,
     weekPop,
   },
   created() {
     this.getHomeDatas();
+    this.getGoods("pop", 1);
+    this.getGoods("new", 1);
+    this.getGoods("sell", 1);
   },
   methods: {
     getHomeDatas() {
       getHomeDatas().then((res) => {
         this.banner = res.data.data.banner.list;
-        this.dKeyword = res.data.data.dKeyword.list;
-        this.keywords = res.data.data.keywords.list;
         this.recommend = res.data.data.recommend.list;
+      });
+    },
+    getGoods(type, page) {
+      getHomeGoods(type, page).then((res) => {
+        this.goods[type].list = res.data.data.list;
       });
     },
   },
@@ -59,9 +72,9 @@ export default {
   text-align: center;
   color: #fff;
   background-color: @tint-color;
+  z-index: 10;
 }
 #home {
-  height: 1200px;
   .content {
     padding-top: 44px;
   }

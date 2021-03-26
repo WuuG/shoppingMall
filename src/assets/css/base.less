@@ -1,11 +1,11 @@
-@import './normalize.css';
+@import "./normalize.css";
 
-@text-color:#666;
-@high-text-color:#ff5777;
-@tint-color:#ff8198;
-@background-color:#fff;
-@font-size:14px;
-@line-height:1.5;
+@text-color: #666;
+@high-text-color: #ff5777;
+@tint-color: #ff8198;
+@background-color: #fff;
+@font-size: 14px;
+@line-height: 1.5;
 
 *,
 *::before,
@@ -21,26 +21,27 @@ body {
   max-width: 540px;
   background: #fff;
   font-size: 14px;
-  font-family: -apple-system,Helvetica,sans-serif;
+  font-family: -apple-system, Helvetica, sans-serif;
   line-height: 1.5;
   color: #666;
-  -webkit-text-size-adjust: 100%!important;
+  -webkit-text-size-adjust: 100% !important;
   padding-bottom: env(safe-area-inset-bottom);
 }
 a {
   text-decoration: none;
+  color: @text-color;
 }
 //双伪元素清楚浮动
 .clearfix::before,
 .clearfix::after {
-    content: "";
-    display: table;//转换为块级元素并一行显示
+  content: "";
+  display: table; //转换为块级元素并一行显示
 }
 
 .clearfix::after {
-    clear: both;
+  clear: both;
 }
 
 .clearfix {
-    *zoom: 1;
+  *zoom: 1;
 }

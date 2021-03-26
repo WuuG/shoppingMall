@@ -39,6 +39,9 @@ export default {
 <style lang="less" scoped>
 @import "~assets/css/base.less";
 .tab {
+  position: sticky;
+  top: 40px;
+  z-index: 10;
   display: flex;
   text-align: center;
   height: 40px;

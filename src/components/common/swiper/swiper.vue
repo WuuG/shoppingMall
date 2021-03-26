@@ -175,7 +175,7 @@ export default {
   // transition: all 1s;
 }
 .indicator {
-  z-index: 100;
+  z-index: 1;
   display: flex;
   position: absolute;
   left: 50%;
