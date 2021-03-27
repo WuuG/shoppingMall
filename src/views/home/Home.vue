@@ -3,15 +3,17 @@
     <nav-bar class="nav-bar">
       <template v-slot:mid>首页</template>
     </nav-bar>
-    <!-- 这里的class千万不能用swiper呀，swiper内部已经有这个类名了，而轮播图挂载的时候，还会用这个类，所以会报错的哦 -->
-    <home-swiper :banner="banner" class="content"></home-swiper>
-    <home-recommend :recommend="recommend"></home-recommend>
-    <week-pop></week-pop>
-    <tab-ctrl
-      :tabTypes="['流行', '新品', '热销']"
-      @tabClick="setCurrentIndex"
-    ></tab-ctrl>
-    <goods :good="goods[tabTypes[currentIndex]]" />
+    <scroll class="wrapper" @refresh="refresh">
+      <!-- 这里的class千万不能用swiper呀，swiper内部已经有这个类名了，而轮播图挂载的时候，还会用这个类，所以会报错的哦 -->
+      <home-swiper :banner="banner" class="content"></home-swiper>
+      <home-recommend :recommend="recommend"></home-recommend>
+      <week-pop></week-pop>
+      <tab-ctrl
+        :tabTypes="['流行', '新品', '热销']"
+        @tabClick="setCurrentIndex"
+      ></tab-ctrl>
+      <goods :good="goods[tabTypes[currentIndex]]" />
+    </scroll>
   </div>
 </template>
 
@@ -19,6 +21,7 @@
 import navBar from "components/common/navbar/NavBar";
 import tabCtrl from "components/content/tabCtrl/TabCtrl";
 import goods from "components/content/goods/Goods";
+import Scroll from "../../components/common/betterScroll/Scroll.vue";
 
 import homeSwiper from "./childComps/HomeSwiper";
 import homeRecommend from "./childComps/HomeRecommend";
@@ -39,6 +42,7 @@ export default {
       },
       currentIndex: 0,
       tabTypes: ["pop", "new", "sell"],
+      bscroll: null,
     };
   },
 
@@ -46,10 +50,12 @@ export default {
     navBar,
     tabCtrl,
     goods,
+    Scroll,
     homeSwiper,
     homeRecommend,
     weekPop,
   },
+
   created() {
     this.getHomeDatas();
     //这里用goods的page比较合适一点，当然直接用1也是可以的
@@ -74,6 +80,7 @@ export default {
         //这里不加...
         this.goods[type].list.push(...res.data.data.list);
         this.goods[type].page++;
+        this.bscroll.refresh();
       });
     },
     /*
@@ -82,6 +89,9 @@ export default {
     //  index from TabCtrl.vue custom events
     setCurrentIndex(index) {
       this.currentIndex = index;
+    },
+    refresh(bscroll) {
+      this.bscroll = bscroll;
     },
   },
 };
@@ -96,8 +106,17 @@ export default {
   z-index: 10;
 }
 #home {
-  .content {
+  // 底下这两个样式有点意思，这里content并没有被wrapper中的content使用，但是wapper却被scroll的warpper使用了
+  > .content {
     padding-top: 44px;
+  }
+  > .wrapper {
+    overflow: hidden;
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
   }
 }
 </style>
