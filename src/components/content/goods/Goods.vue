@@ -19,9 +19,6 @@ export default {
   components: {
     goodsItem,
   },
-  created() {
-    console.log(this.good);
-  },
 };
 </script>
 

@@ -45,13 +45,22 @@ export default {
     };
   },
   mounted() {
-    setTimeout(() => {
+    //这里可以用异步来等待数据加载完成后，再挂载scroll，但是时间是个问题，20ms有时候数据不一定请求完成,可以通过bs.refresh()对数据更新后，进行dom的刷新。
+    //这是一种方法
+    // setTimeout(() => {
+    //   this.scroll = new BScroll(this.$refs.wrapper, {
+    //     click: true,
+    //   });
+    //   this.$emit("refresh", this.scroll);
+    // }, 1000);
+    //betterscroll作者推荐的方法,此时dom已经渲染完了,但是数据没更新啊所以结果还是要用refresh()
+    this.$nextTick(() => {
       this.scroll = new BScroll(this.$refs.wrapper, {
-        click: true,
+        click: true, //  防止tabCtrl无法使用
       });
-      this.$emit("refresh", this.scroll);
       console.log(this.scroll);
-    }, 20);
+      this.$emit("refresh", this.scroll);
+    });
   },
   methods: {},
 };
