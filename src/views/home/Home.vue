@@ -5,7 +5,14 @@
     </nav-bar>
     <!-- 这个自定义事件完全没有必要啊 -->
     <!-- <scroll class="wrapper" @refresh="refresh" ref="scroll"> -->
-    <scroll class="wrapper" ref="scroll" :probeType="3" @scroll="setToTopShow">
+    <scroll
+      class="wrapper"
+      ref="scroll"
+      :probeType="3"
+      @scroll="setToTopShow"
+      :pullUpLoad="true"
+      @pullingUp="getGoods(tabTypes[currentIndex])"
+    >
       <!-- 这里的class千万不能用swiper呀，swiper内部已经有这个类名了，而轮播图挂载的时候，还会用这个类，所以会报错的哦 -->
       <home-swiper :banner="banner" class="content"></home-swiper>
       <home-recommend :recommend="recommend"></home-recommend>
@@ -85,10 +92,11 @@ export default {
         //这里不加...
         this.goods[type].list.push(...res.data.data.list);
         this.goods[type].page++;
-        // 这应该是比较合理的封装方法了，我只是面向scroll这个组件，调用了他的refresh方法  这里不来个异步加载的话，可能来不及push进去。
-        setTimeout(() => {
-          this.$refs.scroll.refresh();
-        }, 200);
+        // 这应该是比较合理的封装方法了，我只是面向scroll这个组件，调用了他的refresh方法  这里不来个异步加载的话，可能来不及push进去。  但是如果异步的话，更新数据时，可能会有一瞬间是白的
+        // setTimeout(() => {
+        //   this.$refs.scroll.refresh();
+        // }, 200);
+        this.$refs.scroll.refresh();
       });
     },
     /*
@@ -97,6 +105,7 @@ export default {
     //  index from TabCtrl.vue custom events
     setCurrentIndex(index) {
       this.currentIndex = index;
+      this.$refs.scroll.refresh();
     },
     // 这里压根不需要自定义时间传值出来，ref完全就可以解决这个问题的
     // refresh(bscroll) {
