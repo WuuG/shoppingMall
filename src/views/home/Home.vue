@@ -5,21 +5,33 @@
     </nav-bar>
     <!-- 这个自定义事件完全没有必要啊 -->
     <!-- <scroll class="wrapper" @refresh="refresh" ref="scroll"> -->
+    <tab-ctrl
+      :tabTypes="['流行', '新品', '热销']"
+      @tabClick="setCurrentIndex"
+      ref="tabCtrlFixed"
+      v-show="tabIsShow"
+      class="tab-fixed"
+    ></tab-ctrl>
     <scroll
       class="wrapper"
       ref="scroll"
       :probeType="3"
-      @scroll="setToTopShow"
+      @scroll="scrolling"
       :pullUpLoad="true"
       @pullingUp="getGoods(tabTypes[currentIndex])"
     >
       <!-- 这里的class千万不能用swiper呀，swiper内部已经有这个类名了，而轮播图挂载的时候，还会用这个类，所以会报错的哦 -->
-      <home-swiper :banner="banner" class="content"></home-swiper>
+      <home-swiper
+        :banner="banner"
+        class="content"
+        @homeSwiperImageLoad="setTabCtrlY"
+      ></home-swiper>
       <home-recommend :recommend="recommend"></home-recommend>
       <week-pop></week-pop>
       <tab-ctrl
         :tabTypes="['流行', '新品', '热销']"
         @tabClick="setCurrentIndex"
+        ref="tabCtrl"
       ></tab-ctrl>
       <goods :good="goods[tabTypes[currentIndex]]" />
     </scroll>
@@ -55,6 +67,9 @@ export default {
       currentIndex: 0, //根据currentIndex来判断进行tab选项。
       tabTypes: ["pop", "new", "sell"], //用以判断getgoods的类别，进行展示。
       toTopShow: false, // 返回按钮的显示。
+      tabCtrlY: 0, //tabCtrl与页面顶部的距离
+      tabCtrlFlag: true, //用以测量tabCtrlY时，不用重复操作
+      tabIsShow: false,
     };
   },
 
@@ -116,17 +131,26 @@ export default {
     //  index from TabCtrl.vue custom events
     setCurrentIndex(index) {
       this.currentIndex = index;
+      this.$refs.tabCtrlFixed.currentIndex = index;
+      this.$refs.tabCtrl.currentIndex = index;
     },
     // 这里压根不需要自定义时间传值出来，ref完全就可以解决这个问题的
     // refresh(bscroll) {
     //   this.bscroll = bscroll;
     // },
     //toTop组件是否显示，以及回到顶端
-    setToTopShow(pos) {
+    scrolling(pos) {
       this.toTopShow = -pos.y > 1200 ? true : false;
+      this.tabIsShow = -pos.y > this.tabCtrlY ? true : false;
     },
     toPos(x, y) {
       this.$refs.scroll.scrollTo(x, y);
+    },
+    setTabCtrlY() {
+      if (this.$refs.tabCtrl && this.tabCtrlFlag) {
+        this.tabCtrlY = this.$refs.tabCtrl.$el.offsetTop; //557
+        this.tabCtrlFlag = false;
+      }
     },
     // 来封装一下。
     //   debounce(func, delay = 200) {
@@ -166,6 +190,11 @@ export default {
     bottom: 49px;
     left: 0;
     right: 0;
+  }
+  > .tab-fixed {
+    position: relative;
+    top: 44px;
+    z-index: 2;
   }
 }
 </style>

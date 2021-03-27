@@ -12,7 +12,7 @@ module.exports = {
         'views': '@/views'
       }
     }
-  }
+  },
 }
 
 

@@ -39,9 +39,6 @@ export default {
 <style lang="less" scoped>
 @import "~assets/css/base.less";
 .tab {
-  position: sticky;
-  top: 40px;
-  z-index: 10;
   display: flex;
   text-align: center;
   height: 40px;
@@ -62,4 +59,8 @@ export default {
     }
   }
 }
+//用样式的方法 确实很复杂，不太容易解决，需要解决上下文堆叠的问题。
+// .fixed {
+//   position: fixed;
+// }
 </style>

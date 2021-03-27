@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>购物车</h2>
+    <h2 class="clearfix cart">购物车</h2>
   </div>
 </template>
 
@@ -8,5 +8,5 @@
 export default {};
 </script>
 
-<style scoped>
+<style scoped lang="less">
 </style>

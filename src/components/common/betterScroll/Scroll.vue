@@ -101,7 +101,6 @@ export default {
 
   methods: {
     refresh() {
-      console.log("refresh");
       this.scroll.refresh();
     },
     scrollTo(x, y, time = this.duration) {

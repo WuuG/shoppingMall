@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <tab-bar-menu></tab-bar-menu>
   </div>
 </template>
@@ -17,6 +19,7 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
-@import "./assets/css/base.less";
+<style lang="less">
+//这样引入可以使用样式，但是不能使用变量。
+@import "~assets/css/base.less";
 </style>
