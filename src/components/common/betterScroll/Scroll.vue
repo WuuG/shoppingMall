@@ -39,10 +39,25 @@
 <script>
 import BScroll from "better-scroll";
 export default {
+  name: "scroll",
   data() {
     return {
       scroll: null,
     };
+  },
+  props: {
+    probeType: {
+      type: Number,
+      default: 0,
+    },
+    duration: {
+      type: Number,
+      default: 300,
+    },
+    pullUpLoad: {
+      type: Boolean,
+      default: false,
+    },
   },
   mounted() {
     //这里可以用异步来等待数据加载完成后，再挂载scroll，但是时间是个问题，20ms有时候数据不一定请求完成,可以通过bs.refresh()对数据更新后，进行dom的刷新。
@@ -57,12 +72,34 @@ export default {
     this.$nextTick(() => {
       this.scroll = new BScroll(this.$refs.wrapper, {
         click: true, //  防止tabCtrl无法使用
+        probeType: this.probeType,
+        pullUpLoad: this.pullUpLoad,
       });
-      console.log(this.scroll);
-      this.$emit("refresh", this.scroll);
+      //这里一定要传一个对象吗？不能直接传刷新这个方法出去吗？，得想想。直接用ref就可以取得这个scroll了
+      // this.$emit("refresh", this.scroll);
+      this.scroll.on("scroll", (pos) => {
+        this.$emit("scroll", pos);
+      });
+      if (this.pullUpLoad) {
+        this.scroll.on("pullingUp", () => {
+          console.log(11);
+          this.$emit("pullingUp");
+          setTimeout(() => {
+            this.scroll.finishPullUp();
+          }, 2000);
+        });
+      }
     });
   },
-  methods: {},
+
+  methods: {
+    refresh() {
+      this.scroll.refresh();
+    },
+    scrollTo(x, y) {
+      this.scroll.scrollTo(x, y, this.duration);
+    },
+  },
 };
 </script>
 

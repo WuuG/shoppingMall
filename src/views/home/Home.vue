@@ -3,7 +3,9 @@
     <nav-bar class="nav-bar">
       <template v-slot:mid>首页</template>
     </nav-bar>
-    <scroll class="wrapper" @refresh="refresh">
+    <!-- 这个自定义事件完全没有必要啊 -->
+    <!-- <scroll class="wrapper" @refresh="refresh" ref="scroll"> -->
+    <scroll class="wrapper" ref="scroll" :probeType="3" @scroll="setToTopShow">
       <!-- 这里的class千万不能用swiper呀，swiper内部已经有这个类名了，而轮播图挂载的时候，还会用这个类，所以会报错的哦 -->
       <home-swiper :banner="banner" class="content"></home-swiper>
       <home-recommend :recommend="recommend"></home-recommend>
@@ -14,6 +16,7 @@
       ></tab-ctrl>
       <goods :good="goods[tabTypes[currentIndex]]" />
     </scroll>
+    <to-top v-show="toTopShow" @click.native="toPos(0, 0)"></to-top>
   </div>
 </template>
 
@@ -22,6 +25,7 @@ import navBar from "components/common/navbar/NavBar";
 import tabCtrl from "components/content/tabCtrl/TabCtrl";
 import goods from "components/content/goods/Goods";
 import Scroll from "../../components/common/betterScroll/Scroll.vue";
+import ToTop from "../../components/common/toTop/ToTop";
 
 import homeSwiper from "./childComps/HomeSwiper";
 import homeRecommend from "./childComps/HomeRecommend";
@@ -42,7 +46,7 @@ export default {
       },
       currentIndex: 0,
       tabTypes: ["pop", "new", "sell"],
-      bscroll: null,
+      toTopShow: false,
     };
   },
 
@@ -51,6 +55,7 @@ export default {
     tabCtrl,
     goods,
     Scroll,
+    ToTop,
     homeSwiper,
     homeRecommend,
     weekPop,
@@ -80,7 +85,10 @@ export default {
         //这里不加...
         this.goods[type].list.push(...res.data.data.list);
         this.goods[type].page++;
-        this.bscroll.refresh();
+        // 这应该是比较合理的封装方法了，我只是面向scroll这个组件，调用了他的refresh方法  这里不来个异步加载的话，可能来不及push进去。
+        setTimeout(() => {
+          this.$refs.scroll.refresh();
+        }, 200);
       });
     },
     /*
@@ -90,8 +98,16 @@ export default {
     setCurrentIndex(index) {
       this.currentIndex = index;
     },
-    refresh(bscroll) {
-      this.bscroll = bscroll;
+    // 这里压根不需要自定义时间传值出来，ref完全就可以解决这个问题的
+    // refresh(bscroll) {
+    //   this.bscroll = bscroll;
+    // },
+    //toTop组件是否显示，以及回到顶端
+    setToTopShow(pos) {
+      this.toTopShow = -pos.y > 1200 ? true : false;
+    },
+    toPos(x, y) {
+      this.$refs.scroll.scrollTo(x, y, 500);
     },
   },
 };
