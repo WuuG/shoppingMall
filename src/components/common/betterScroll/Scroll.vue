@@ -46,17 +46,25 @@ export default {
     };
   },
   props: {
+    //scroll移动的监听类型
     probeType: {
       type: Number,
       default: 0,
     },
+    //回到顶部的动画时间
     duration: {
       type: Number,
       default: 300,
     },
+    //是否需要监听下拉到顶部
     pullUpLoad: {
       type: Boolean,
       default: false,
+    },
+    //商品页面的下拉加载间隔
+    loadTime: {
+      tyoe: Number,
+      default: 500,
     },
   },
   mounted() {
@@ -82,11 +90,10 @@ export default {
       });
       if (this.pullUpLoad) {
         this.scroll.on("pullingUp", () => {
-          console.log(11);
           this.$emit("pullingUp");
           setTimeout(() => {
             this.scroll.finishPullUp();
-          }, 2000);
+          }, this.loadTime);
         });
       }
     });
@@ -94,10 +101,11 @@ export default {
 
   methods: {
     refresh() {
+      console.log("refresh");
       this.scroll.refresh();
     },
-    scrollTo(x, y) {
-      this.scroll.scrollTo(x, y, this.duration);
+    scrollTo(x, y, time = this.duration) {
+      this.scroll.scrollTo(x, y, time);
     },
   },
 };

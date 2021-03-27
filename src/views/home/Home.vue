@@ -39,6 +39,7 @@ import homeRecommend from "./childComps/HomeRecommend";
 import weekPop from "./childComps/WeekPop";
 
 import { getHomeDatas, getHomeGoods } from "network/home.js";
+import { debounce } from "common/utils";
 
 export default {
   name: "home",
@@ -51,9 +52,9 @@ export default {
         new: { page: 0, list: [] }, //对应新品
         sell: { page: 0, list: [] }, //对应热销
       },
-      currentIndex: 0,
-      tabTypes: ["pop", "new", "sell"],
-      toTopShow: false,
+      currentIndex: 0, //根据currentIndex来判断进行tab选项。
+      tabTypes: ["pop", "new", "sell"], //用以判断getgoods的类别，进行展示。
+      toTopShow: false, // 返回按钮的显示。
     };
   },
 
@@ -74,6 +75,16 @@ export default {
     this.getGoods("pop");
     this.getGoods("new");
     this.getGoods("sell");
+  },
+  mounted() {
+    //这里还会使用返回回来的函数的，同时这个是个局部变量，理论上是会被销毁的，但是因为底下有个闭包所以之后使用的refresh还是同一个refresh,
+    const refresh = debounce(this.$refs.scroll.refresh); //注意这个debounce函数只是调用了一次而已
+    this.$bus.$on("goodsImageLoad", () => {
+      //防止图片已经刷新了，scroll还没有被挂载
+      // 若是没有在上面没有进行refresh的定义的话，每次直接调用，都是一个新的函数，timer是不会一致的，相当于有两次闭包？
+      // this.$refs.scroll && debounce(this.$refs.scroll.refresh);
+      this.$refs.scroll && refresh();
+    });
   },
   methods: {
     /*
@@ -96,7 +107,7 @@ export default {
         // setTimeout(() => {
         //   this.$refs.scroll.refresh();
         // }, 200);
-        this.$refs.scroll.refresh();
+        //并不合理，想太多了兄弟。
       });
     },
     /*
@@ -105,7 +116,6 @@ export default {
     //  index from TabCtrl.vue custom events
     setCurrentIndex(index) {
       this.currentIndex = index;
-      this.$refs.scroll.refresh();
     },
     // 这里压根不需要自定义时间传值出来，ref完全就可以解决这个问题的
     // refresh(bscroll) {
@@ -116,8 +126,22 @@ export default {
       this.toTopShow = -pos.y > 1200 ? true : false;
     },
     toPos(x, y) {
-      this.$refs.scroll.scrollTo(x, y, 500);
+      this.$refs.scroll.scrollTo(x, y);
     },
+    // 来封装一下。
+    //   debounce(func, delay = 200) {
+    //     let timer = null;
+    //     //我有预感，这个函数的目的也是为了闭包。试了一下，没有这个闭包的话，每次的timer都是重新定义的
+    //     return function (...arg) {
+    //       if (timer) {
+    //         clearTimeout(timer);
+    //       }
+    //       timer = setTimeout(() => {
+    //         //原来这样才是传入函数的真正写法啊
+    //         func.apply(this, arg);
+    //       }, delay);
+    //     };
+    //   },
   },
 };
 </script>

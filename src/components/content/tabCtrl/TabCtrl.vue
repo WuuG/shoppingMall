@@ -51,13 +51,15 @@ export default {
     text-align: center;
     flex: 1;
     span {
+      transition: all 0.5s;
       padding: 7px;
       width: 70%;
+      border-bottom: 2px solid transparent;
     }
-  }
-  .active {
-    color: @high-text-color;
-    border-bottom: 2px solid @tint-color;
+    .active {
+      color: @high-text-color;
+      border-bottom: 2px solid @tint-color;
+    }
   }
 }
 </style>
