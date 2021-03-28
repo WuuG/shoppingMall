@@ -23,7 +23,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~assets/css/base.less";
 .recommend {
   display: flex;
   padding: 20px 0 30px;
