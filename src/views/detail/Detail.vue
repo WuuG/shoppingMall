@@ -1,12 +1,19 @@
 <template>
   <div>
+    <detail-nav
+      :currentIndex="currentIndex"
+      @navTitleClick="navTitleClick"
+    ></detail-nav>
     <detail-swiper :images="topImages"></detail-swiper>
   </div>
 </template>
 
 <script>
-import { getDetailDatas } from "network/detail";
 import DetailSwiper from "./childComps/DetailSwiper.vue";
+import DetailNav from "./childComps/DetailNav.vue";
+
+import { getDetailDatas } from "network/detail";
+
 export default {
   name: "detail",
   data() {
@@ -14,10 +21,12 @@ export default {
       iid: null,
       data: {},
       topImages: [],
+      currentIndex: 0,
     };
   },
   components: {
     DetailSwiper,
+    DetailNav,
   },
   created() {
     this.iid = this.$route.params.iid;
@@ -29,6 +38,9 @@ export default {
         this.data = res.data.result;
         this.topImages = this.data.itemInfo.topImages;
       });
+    },
+    navTitleClick(index) {
+      this.currentIndex = index;
     },
   },
 };
