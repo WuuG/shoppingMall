@@ -18,7 +18,7 @@
       :probeType="3"
       @scroll="scrolling"
       :pullUpLoad="true"
-      @pullingUp="getGoods(tabTypes[currentIndex])"
+      @pullingUp="getAllGoods"
     >
       <!-- 这里的class千万不能用swiper呀，swiper内部已经有这个类名了，而轮播图挂载的时候，还会用这个类，所以会报错的哦 -->
       <home-swiper
@@ -119,21 +119,33 @@ export default {
         //这里不加...
         this.goods[type].list.push(...res.data.data.list);
         this.goods[type].page++;
-        // 这应该是比较合理的封装方法了，我只是面向scroll这个组件，调用了他的refresh方法  这里不来个异步加载的话，可能来不及push进去。  但是如果异步的话，更新数据时，可能会有一瞬间是白的
-        // setTimeout(() => {
-        //   this.$refs.scroll.refresh();
-        // }, 200);
-        //并不合理，想太多了兄弟。
       });
+    },
+    getAllGoods() {
+      const page = this.goods["pop"].page + 1;
+      for (let type of this.tabTypes) {
+        getHomeGoods(type, page)
+          .then((res) => {
+            //这里不加...
+            this.goods[type].list.push(...res.data.data.list);
+            this.goods[type].page++;
+          })
+          .catch(() => {
+            alert("已经到底啦！，请刷新。");
+          });
+      }
     },
     /*
      **  事件监听方法
      */
     //  index from TabCtrl.vue custom events
     setCurrentIndex(index) {
-      this.tabCtrlItemY[this.currentIndex - 1] = this.$refs.scroll.getY(); //每次切换tabCtrl时,记录原先页面的滚动值.
-      // console.log(this.tabCtrlItemY[index - 1], "index = ", index - 1);  //先写到这,好像还有奇怪的滚动bug
-      this.toPos(0, this.tabCtrlItemY[index - 1], 0); //切换到新页面,瞬间切换到其原先记录的位置
+      if (-this.$refs.scroll.getY() >= this.tabCtrlY) {
+        this.$refs.scroll.refresh();
+        this.tabCtrlItemY[this.currentIndex] = this.$refs.scroll.getY(); //每次切换tabCtrl时,记录原先页面的滚动值.
+        console.log(this.tabCtrlItemY);
+        this.toPos(0, this.tabCtrlItemY[index], 0); //切换到新页面,瞬间切换到其原先记录的位置
+      }
       this.currentIndex = index;
       this.$refs.tabCtrlFixed.currentIndex = index;
       this.$refs.tabCtrl.currentIndex = index;
@@ -158,7 +170,6 @@ export default {
         while (item++ < this.tabTypes.length) {
           this.tabCtrlItemY.push(-this.tabCtrlY); //初始化不同页面的初始高度,滚动时负值哟
         }
-        console.log(this.tabCtrlItemY);
       }
     },
     // 来封装一下。

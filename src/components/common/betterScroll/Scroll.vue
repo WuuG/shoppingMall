@@ -98,10 +98,16 @@ export default {
       }
     });
   },
-
+  activated() {
+    console.log(11);
+  },
+  deactivated() {
+    console.log(22);
+  },
   methods: {
     refresh() {
       this.scroll.refresh();
+      return "success";
     },
     scrollTo(x, y, time = this.duration) {
       this.scroll.scrollTo(x, y, time);

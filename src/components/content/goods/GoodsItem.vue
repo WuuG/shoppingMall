@@ -1,6 +1,11 @@
 <template>
   <div class="good-items">
-    <div v-for="item in goodList" :key="item.id" class="good-item">
+    <div
+      v-for="(item, index) in goodList"
+      :key="item.id"
+      class="good-item"
+      @click="toDetail(index)"
+    >
       <img :src="item.show.img" alt="" @load="imageLoad" />
       <div class="good-info">
         <p>{{ item.title }}</p>
@@ -24,6 +29,9 @@ export default {
   methods: {
     imageLoad() {
       this.$bus.$emit("goodsImageLoad");
+    },
+    toDetail(index) {
+      console.log(this.goodList[index]);
     },
   },
 };
