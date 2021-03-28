@@ -10,7 +10,7 @@
       @tabClick="setCurrentIndex"
       ref="tabCtrlFixed"
       v-show="tabIsShow"
-      class="tab-fixed"
+      :isfixed="true"
     ></tab-ctrl>
     <scroll
       class="wrapper"
@@ -143,7 +143,6 @@ export default {
       if (-this.$refs.scroll.getY() >= this.tabCtrlY) {
         this.$refs.scroll.refresh();
         this.tabCtrlItemY[this.currentIndex] = this.$refs.scroll.getY(); //每次切换tabCtrl时,记录原先页面的滚动值.
-        console.log(this.tabCtrlItemY);
         this.toPos(0, this.tabCtrlItemY[index], 0); //切换到新页面,瞬间切换到其原先记录的位置
       }
       this.currentIndex = index;
@@ -210,12 +209,6 @@ export default {
     bottom: 49px;
     left: 0;
     right: 0;
-  }
-  > .tab-fixed {
-    position: fixed;
-    width: 100%;
-    top: 44px;
-    z-index: 2;
   }
 }
 </style>

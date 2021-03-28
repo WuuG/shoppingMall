@@ -1,10 +1,10 @@
 <template>
   <div class="good-items">
     <div
-      v-for="(item, index) in goodList"
+      v-for="item in goodList"
       :key="item.id"
       class="good-item"
-      @click="toDetail(index)"
+      @click="toDetail(item)"
     >
       <img :src="item.show.img" alt="" @load="imageLoad" />
       <div class="good-info">
@@ -30,8 +30,8 @@ export default {
     imageLoad() {
       this.$bus.$emit("goodsImageLoad");
     },
-    toDetail(index) {
-      console.log(this.goodList[index]);
+    toDetail(item) {
+      this.$router.push("/detail/" + item.iid);
     },
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="tab">
+  <div class="tab" :class="{ 'tab-fixed': isfixed }">
     <div
       v-for="(tabType, index) in tabTypes"
       :key="tabType.id"
@@ -25,6 +25,10 @@ export default {
       default() {
         return [];
       },
+    },
+    isfixed: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
@@ -58,6 +62,13 @@ export default {
       border-bottom: 2px solid @tint-color;
     }
   }
+}
+.tab-fixed {
+  position: fixed;
+  width: 100%;
+  top: 43px;
+  z-index: 2;
+  background-color: #fff;
 }
 //用样式的方法 确实很复杂，不太容易解决，需要解决上下文堆叠的问题。
 // .fixed {
