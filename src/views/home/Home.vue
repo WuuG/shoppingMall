@@ -69,7 +69,8 @@ export default {
       toTopShow: false, // 返回按钮的显示。
       tabCtrlY: 0, //tabCtrl与页面顶部的距离
       tabCtrlFlag: true, //用以测量tabCtrlY时，不用重复操作
-      tabIsShow: false,
+      tabIsShow: false, //tabCtrl是否显示。
+      tabCtrlItemY: [],
     };
   },
 
@@ -130,6 +131,9 @@ export default {
      */
     //  index from TabCtrl.vue custom events
     setCurrentIndex(index) {
+      this.tabCtrlItemY[this.currentIndex - 1] = this.$refs.scroll.getY(); //每次切换tabCtrl时,记录原先页面的滚动值.
+      // console.log(this.tabCtrlItemY[index - 1], "index = ", index - 1);  //先写到这,好像还有奇怪的滚动bug
+      this.toPos(0, this.tabCtrlItemY[index - 1], 0); //切换到新页面,瞬间切换到其原先记录的位置
       this.currentIndex = index;
       this.$refs.tabCtrlFixed.currentIndex = index;
       this.$refs.tabCtrl.currentIndex = index;
@@ -140,16 +144,21 @@ export default {
     // },
     //toTop组件是否显示，以及回到顶端
     scrolling(pos) {
-      this.toTopShow = -pos.y > 1200 ? true : false;
+      this.toTopShow = -pos.y > this.tabCtrlY * 2 ? true : false;
       this.tabIsShow = -pos.y > this.tabCtrlY ? true : false;
     },
-    toPos(x, y) {
-      this.$refs.scroll.scrollTo(x, y);
+    toPos(x, y, time = 500) {
+      this.$refs.scroll.scrollTo(x, y, time);
     },
     setTabCtrlY() {
       if (this.$refs.tabCtrl && this.tabCtrlFlag) {
         this.tabCtrlY = this.$refs.tabCtrl.$el.offsetTop; //557
         this.tabCtrlFlag = false;
+        let item = 0;
+        while (item++ < this.tabTypes.length) {
+          this.tabCtrlItemY.push(-this.tabCtrlY); //初始化不同页面的初始高度,滚动时负值哟
+        }
+        console.log(this.tabCtrlItemY);
       }
     },
     // 来封装一下。
@@ -192,7 +201,8 @@ export default {
     right: 0;
   }
   > .tab-fixed {
-    position: relative;
+    position: fixed;
+    width: 100%;
     top: 44px;
     z-index: 2;
   }

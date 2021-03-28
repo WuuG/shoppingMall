@@ -13,7 +13,7 @@
       </template>
     </tab-bar-item>
     <tab-bar-item :path="'/see'" :color="color">
-      <template v-slot:text>发现</template>
+      <template v-slot:text>分类</template>
       <template v-slot:img
         ><img src="~assets/img/tabbar/eye.svg" alt=""
       /></template>

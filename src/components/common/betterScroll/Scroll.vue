@@ -106,6 +106,9 @@ export default {
     scrollTo(x, y, time = this.duration) {
       this.scroll.scrollTo(x, y, time);
     },
+    getY() {
+      return this.scroll.y;
+    },
   },
 };
 </script>
