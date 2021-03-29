@@ -14,17 +14,31 @@
       <div class="sales">
         <span>{{ itemInfo.sales }}</span>
         <span>{{ itemInfo.collection }}</span>
-        <span>{{ servicesExpress.name }}</span>
+        <div>
+          <img :src="servicesExpress.icon" alt="" />
+
+          <span>{{ servicesExpress.name }}</span>
+        </div>
       </div>
       <div>
         <div>
           <span>
-            {{ servicesExpressPrice.icon }}
-            {{ servicesExpressPrice }}
+            <img :src="servicesExpressPrice.icon" alt="" />
+            {{ servicesExpressPrice.name }}
           </span>
         </div>
-        <span>{{ servicesExpressGlobal.name }}</span>
-        <span>{{ servicesExpressNoreason.name }}</span>
+        <div>
+          <span>
+            <img :src="servicesExpressGlobal.icon" alt="" />
+            {{ servicesExpressGlobal.name }}
+          </span>
+        </div>
+        <div>
+          <span>
+            <img :src="servicesExpressNoreason.icon" alt="" />
+            {{ servicesExpressNoreason.name }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -35,6 +49,10 @@ export default {
   data() {
     return {
       services: {},
+      service: {
+        name: "",
+        icon: "",
+      },
     };
   },
   props: {
@@ -47,16 +65,19 @@ export default {
   },
   computed: {
     servicesExpress() {
-      return this.itemInfo.services && this.itemInfo.services[3];
+      console.log(this.service);
+      return this.itemInfo.services
+        ? this.itemInfo.services[this.itemInfo.services.length - 1]
+        : this.service;
     },
     servicesExpressPrice() {
-      return this.itemInfo.services && this.itemInfo.services[0];
+      return this.itemInfo.services ? this.itemInfo.services[0] : this.service;
     },
     servicesExpressGlobal() {
-      return this.itemInfo.services && this.itemInfo.services[1];
+      return this.itemInfo.services ? this.itemInfo.services[1] : this.service;
     },
     servicesExpressNoreason() {
-      return this.itemInfo.services && this.itemInfo.services[2];
+      return this.itemInfo.services ? this.itemInfo.services[2] : this.service;
     },
   },
 };

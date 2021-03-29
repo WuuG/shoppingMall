@@ -1,5 +1,5 @@
 <template>
-  <tab-bar>
+  <tab-bar class="tab-bar-menu">
     <tab-bar-item :path="'/home'" :color="color">
       <!-- 父组件通过定义v-slot:子组件名称="自定义的对象" 通过 对象.子组件传递过来的参数 来进行使用
       在本例中, 自定义slot a是子组件传递来的参数 故可以表示为slot.a -->
@@ -59,4 +59,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.tab-bar-menu {
+  display: none;
+}
 </style>
