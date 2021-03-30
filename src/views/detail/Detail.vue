@@ -6,6 +6,7 @@
     ></detail-nav>
     <detail-swiper :images="topImages"></detail-swiper>
     <item-info :itemInfo="itemInfo"></item-info>
+    <shop-info :shopInfo="shopInfo"></shop-info>
   </div>
 </template>
 
@@ -13,24 +14,27 @@
 import DetailSwiper from "./childComps/DetailSwiper.vue";
 import DetailNav from "./childComps/DetailNav.vue";
 import ItemInfo from "./childComps/ItemInfo";
+import ShopInfo from "./childComps/ShopInfo";
 
-import { getDetailDatas, itemInfo } from "network/detail";
+import { getDetailDatas, itemInfo, shopInfo } from "network/detail";
 
 export default {
   name: "detail",
   data() {
     return {
-      iid: null,
-      data: {},
-      topImages: [],
-      currentIndex: 0,
-      itemInfo: {},
+      iid: null, //商品的id
+      data: {}, //detial页面所需要获取的所有信息
+      topImages: [], //轮播图图片
+      currentIndex: 0, //nav-bar目前的索引值
+      itemInfo: {}, //商品信息
+      shopInfo: {}, //店铺信息
     };
   },
   components: {
     DetailSwiper,
     DetailNav,
     ItemInfo,
+    ShopInfo,
   },
   created() {
     this.iid = this.$route.params.iid;
@@ -50,7 +54,8 @@ export default {
           data.columns,
           data.shopInfo
         );
-        console.log(data.itemInfo, data.columns, data.shopInfo);
+        this.shopInfo = new shopInfo(data.shopInfo);
+        console.log(this.shopInfo);
       });
     },
     /*
