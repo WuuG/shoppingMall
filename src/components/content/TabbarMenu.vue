@@ -61,5 +61,7 @@ export default {
 <style lang="less" scoped>
 .tab-bar-menu {
   display: none;
+  position: fixed;
+  bottom: 0;
 }
 </style>
