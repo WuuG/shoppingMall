@@ -98,12 +98,6 @@ export default {
       }
     });
   },
-  activated() {
-    console.log(11);
-  },
-  deactivated() {
-    console.log(22);
-  },
   methods: {
     refresh() {
       this.scroll.refresh();

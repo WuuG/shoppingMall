@@ -4,9 +4,14 @@
       :currentIndex="currentIndex"
       @navTitleClick="navTitleClick"
     ></detail-nav>
-    <detail-swiper :images="topImages"></detail-swiper>
-    <item-info :itemInfo="itemInfo"></item-info>
-    <shop-info :shopInfo="shopInfo"></shop-info>
+    <scroll class="detail-content" ref="detailScroll">
+      <detail-swiper
+        :images="topImages"
+        @swiperImageLoad="scrollRefresh"
+      ></detail-swiper>
+      <item-info :itemInfo="itemInfo"></item-info>
+      <shop-info :shopInfo="shopInfo"></shop-info>
+    </scroll>
   </div>
 </template>
 
@@ -15,6 +20,8 @@ import DetailSwiper from "./childComps/DetailSwiper.vue";
 import DetailNav from "./childComps/DetailNav.vue";
 import ItemInfo from "./childComps/ItemInfo";
 import ShopInfo from "./childComps/ShopInfo";
+
+import Scroll from "components/common/betterScroll/Scroll";
 
 import { getDetailDatas, itemInfo, shopInfo } from "network/detail";
 
@@ -35,6 +42,7 @@ export default {
     DetailNav,
     ItemInfo,
     ShopInfo,
+    Scroll,
   },
   created() {
     this.iid = this.$route.params.iid;
@@ -64,9 +72,24 @@ export default {
     navTitleClick(index) {
       this.currentIndex = index;
     },
+    scrollRefresh() {
+      console.log(this.$refs.detailScroll.scroll);
+      this.$refs.detailScroll.refresh();
+      setTimeout(() => {
+        this.$refs.detailScroll.refresh();
+      }, 2000);
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.detail-content {
+  overflow: hidden;
+  position: absolute;
+  top: 44px;
+  bottom: 0;
+  z-index: 2;
+  background-color: #fff;
+}
 </style>
