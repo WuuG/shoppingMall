@@ -58,7 +58,7 @@ export default {
   position: relative;
   padding: 10px;
   font-size: 14px;
-  border-bottom: 2px solid #ececec;
+  border-bottom: 5px solid #ececec;
   .border {
     position: absolute;
     top: 58%;

@@ -39,6 +39,7 @@ export default {
 
 <style lang="less" scoped>
 .detail-images {
+  border-bottom: 5px solid #ececec;
   width: 100%;
   img {
     width: 100%;

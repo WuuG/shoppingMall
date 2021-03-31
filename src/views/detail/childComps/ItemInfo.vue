@@ -83,7 +83,7 @@ export default {
 <style lang="less" scoped>
 .item-info {
   padding: 10px;
-  border-bottom: 2px solid #ececec;
+  border-bottom: 5px solid #ececec;
   img {
     width: 15px;
     height: 15px;

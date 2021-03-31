@@ -15,6 +15,7 @@
         :detailImages="detailImages"
         @detailImagesLoad="scrollRefresh"
       ></detail-images>
+      <detail-params :itemParams="itemParams"></detail-params>
     </scroll>
   </div>
 </template>
@@ -25,6 +26,7 @@ import DetailNav from "./childComps/DetailNav.vue";
 import ItemInfo from "./childComps/ItemInfo";
 import ShopInfo from "./childComps/ShopInfo";
 import DetailImages from "./childComps/DetailImage";
+import DetailParams from "./childComps/DetailParams";
 
 import Scroll from "components/common/betterScroll/Scroll";
 
@@ -42,6 +44,7 @@ export default {
       itemInfo: {}, //商品信息
       shopInfo: {}, //店铺信息
       detailImages: [],
+      itemParams: {},
     };
   },
   components: {
@@ -51,6 +54,7 @@ export default {
     ShopInfo,
     Scroll,
     DetailImages,
+    DetailParams,
   },
   created() {
     this.iid = this.$route.params.iid;
@@ -78,6 +82,7 @@ export default {
         );
         this.shopInfo = new shopInfo(data.shopInfo);
         this.detailImages = data.detailInfo.detailImage;
+        this.itemParams = data.itemParams;
       });
     },
     /*
