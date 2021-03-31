@@ -16,6 +16,7 @@
         @detailImagesLoad="scrollRefresh"
       ></detail-images>
       <detail-params :itemParams="itemParams"></detail-params>
+      <detail-comment :detailRate="detailRate"></detail-comment>
     </scroll>
   </div>
 </template>
@@ -27,6 +28,7 @@ import ItemInfo from "./childComps/ItemInfo";
 import ShopInfo from "./childComps/ShopInfo";
 import DetailImages from "./childComps/DetailImage";
 import DetailParams from "./childComps/DetailParams";
+import DetailComment from "./childComps/DetailComment";
 
 import Scroll from "components/common/betterScroll/Scroll";
 
@@ -43,8 +45,9 @@ export default {
       currentIndex: 0, //nav-bar目前的索引值
       itemInfo: {}, //商品信息
       shopInfo: {}, //店铺信息
-      detailImages: [],
-      itemParams: {},
+      detailImages: [], //商品图片
+      itemParams: {}, //商品参数
+      detailRate: {}, //用户评价
     };
   },
   components: {
@@ -55,6 +58,7 @@ export default {
     Scroll,
     DetailImages,
     DetailParams,
+    DetailComment,
   },
   created() {
     this.iid = this.$route.params.iid;
@@ -73,16 +77,24 @@ export default {
     getDetailDatas(iid) {
       getDetailDatas(iid).then((res) => {
         const data = res.data.result;
-        this.data = res.data.result;
+        //1.获取全部数据
+        this.data = res.data.result; //这个是没有必要的，你敢信
+        //2.轮播图数据
         this.topImages = data.itemInfo.topImages;
+        //3.商品数据
         this.itemInfo = new itemInfo(
           data.itemInfo,
           data.columns,
           data.shopInfo
         );
+        //4.店铺数据
         this.shopInfo = new shopInfo(data.shopInfo);
+        //5.商品图片展示
         this.detailImages = data.detailInfo.detailImage;
+        //6.商品参数
         this.itemParams = data.itemParams;
+        //7.评价
+        this.detailRate = data.rate.list ? data.rate.list[0] : {};
       });
     },
     /*

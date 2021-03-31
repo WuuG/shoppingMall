@@ -1,7 +1,7 @@
 <template>
   <div class="params">
     <section class="params-rule">
-      <div v-for="table in tables[0]" :key="table.id" class="params-rule-table">
+      <div v-for="table in tables" :key="table.id" class="params-rule-table">
         <span v-for="item in table" :key="item.id">
           {{ item }}
         </span>
@@ -29,7 +29,21 @@ export default {
   },
   computed: {
     tables() {
-      return this.itemParams.rule ? this.itemParams.rule.tables : {};
+      //这后端的数据处理也太傻逼了吧。
+      if (this.itemParams.rule) {
+        let tables = this.itemParams.rule.tables;
+        if (tables.length > 1) {
+          for (let i = 1; i < tables.length; i++) {
+            for (let j in tables[i]) {
+              tables[i][j].shift();
+              tables[0][j] = tables[0][j].concat(tables[i][j]);
+            }
+          }
+        }
+        return tables[0];
+      }
+      return {};
+      // return this.itemParams.rule ? this.itemParams.rule.tables : {};
     },
     set() {
       return this.itemParams.info ? this.itemParams.info.set : {};
@@ -49,6 +63,7 @@ export default {
       line-height: 30px;
       border-bottom: 1px solid #ececec;
       span {
+        overflow: hidden;
         flex: 1;
       }
       span:nth-child(1) {
