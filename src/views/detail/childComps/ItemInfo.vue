@@ -63,7 +63,6 @@ export default {
   },
   computed: {
     servicesExpress() {
-      console.log(this.service);
       return this.itemInfo.services
         ? this.itemInfo.services[this.itemInfo.services.length - 1]
         : this.service;

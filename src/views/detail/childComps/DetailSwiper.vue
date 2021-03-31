@@ -37,7 +37,6 @@ export default {
     swiperImageLoad() {
       if (this.swiperImageFlag) {
         this.$emit("swiperImageLoad");
-        console.log(11);
         this.swiperImageFlag = false;
       }
     },

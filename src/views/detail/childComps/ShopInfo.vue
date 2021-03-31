@@ -26,6 +26,9 @@
         </div>
       </section>
     </section>
+    <section class="shop-btn">
+      <a :href="shopInfo.shopUrl"> 进店逛逛 </a>
+    </section>
   </div>
 </template>
 
@@ -128,6 +131,15 @@ export default {
           background-color: green;
         }
       }
+    }
+  }
+  .shop-btn {
+    text-align: center;
+    margin: 10px 0;
+    a {
+      padding: 5px 30px;
+      background-color: #ccc;
+      border-radius: 20px;
     }
   }
 }

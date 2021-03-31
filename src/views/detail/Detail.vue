@@ -11,6 +11,10 @@
       ></detail-swiper>
       <item-info :itemInfo="itemInfo"></item-info>
       <shop-info :shopInfo="shopInfo"></shop-info>
+      <detail-images
+        :detailImages="detailImages"
+        @detailImagesLoad="scrollRefresh"
+      ></detail-images>
     </scroll>
   </div>
 </template>
@@ -20,10 +24,12 @@ import DetailSwiper from "./childComps/DetailSwiper.vue";
 import DetailNav from "./childComps/DetailNav.vue";
 import ItemInfo from "./childComps/ItemInfo";
 import ShopInfo from "./childComps/ShopInfo";
+import DetailImages from "./childComps/DetailImage";
 
 import Scroll from "components/common/betterScroll/Scroll";
 
 import { getDetailDatas, itemInfo, shopInfo } from "network/detail";
+import { debounce } from "common/utils";
 
 export default {
   name: "detail",
@@ -35,6 +41,7 @@ export default {
       currentIndex: 0, //nav-bar目前的索引值
       itemInfo: {}, //商品信息
       shopInfo: {}, //店铺信息
+      detailImages: [],
     };
   },
   components: {
@@ -43,10 +50,17 @@ export default {
     ItemInfo,
     ShopInfo,
     Scroll,
+    DetailImages,
   },
   created() {
     this.iid = this.$route.params.iid;
     this.getDetailDatas(this.iid);
+  },
+  computed: {
+    //防抖函数需要一个
+    debounceRefresh() {
+      return debounce(this.$refs.detailScroll.refresh);
+    },
   },
   methods: {
     /*
@@ -63,7 +77,7 @@ export default {
           data.shopInfo
         );
         this.shopInfo = new shopInfo(data.shopInfo);
-        console.log(this.shopInfo);
+        this.detailImages = data.detailInfo.detailImage;
       });
     },
     /*
@@ -73,11 +87,7 @@ export default {
       this.currentIndex = index;
     },
     scrollRefresh() {
-      console.log(this.$refs.detailScroll.scroll);
-      this.$refs.detailScroll.refresh();
-      setTimeout(() => {
-        this.$refs.detailScroll.refresh();
-      }, 2000);
+      this.debounceRefresh();
     },
   },
 };
