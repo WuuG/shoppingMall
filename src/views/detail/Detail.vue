@@ -4,7 +4,7 @@
       :currentIndex="currentIndex"
       @navTitleClick="navTitleClick"
     ></detail-nav>
-    <scroll class="detail-content" ref="detailScroll">
+    <scroll class="detail-content" ref="scroll">
       <detail-swiper
         :images="topImages"
         @swiperImageLoad="scrollRefresh"
@@ -17,6 +17,7 @@
       ></detail-images>
       <detail-params :itemParams="itemParams"></detail-params>
       <detail-comment :detailRate="detailRate"></detail-comment>
+      <goods :good="detailRcommend"></goods>
     </scroll>
   </div>
 </template>
@@ -32,15 +33,19 @@ import DetailComment from "./childComps/DetailComment";
 
 import Scroll from "components/common/betterScroll/Scroll";
 
-import { getDetailDatas, itemInfo, shopInfo } from "network/detail";
-import { debounce } from "common/utils";
+import {
+  getDetailDatas,
+  itemInfo,
+  shopInfo,
+  getRecommend,
+} from "network/detail";
+import { scrollMix } from "common/mixin";
 
 export default {
   name: "detail",
   data() {
     return {
       iid: null, //商品的id
-      data: {}, //detial页面所需要获取的所有信息
       topImages: [], //轮播图图片
       currentIndex: 0, //nav-bar目前的索引值
       itemInfo: {}, //商品信息
@@ -48,6 +53,7 @@ export default {
       detailImages: [], //商品图片
       itemParams: {}, //商品参数
       detailRate: {}, //用户评价
+      detailRcommend: {}, //商品推荐模块
     };
   },
   components: {
@@ -60,15 +66,14 @@ export default {
     DetailParams,
     DetailComment,
   },
+  mixins: [scrollMix],
   created() {
     this.iid = this.$route.params.iid;
     this.getDetailDatas(this.iid);
+    this.getRecommend();
   },
-  computed: {
-    //防抖函数需要一个
-    debounceRefresh() {
-      return debounce(this.$refs.detailScroll.refresh);
-    },
+  mounted() {
+    this.debounceRefresh();
   },
   methods: {
     /*
@@ -77,8 +82,6 @@ export default {
     getDetailDatas(iid) {
       getDetailDatas(iid).then((res) => {
         const data = res.data.result;
-        //1.获取全部数据
-        this.data = res.data.result; //这个是没有必要的，你敢信
         //2.轮播图数据
         this.topImages = data.itemInfo.topImages;
         //3.商品数据
@@ -95,6 +98,12 @@ export default {
         this.itemParams = data.itemParams;
         //7.评价
         this.detailRate = data.rate.list ? data.rate.list[0] : {};
+        //
+      });
+    },
+    getRecommend() {
+      getRecommend().then((res) => {
+        this.detailRcommend = res.data.data;
       });
     },
     /*
@@ -104,7 +113,7 @@ export default {
       this.currentIndex = index;
     },
     scrollRefresh() {
-      this.debounceRefresh();
+      this.Imagelistener();
     },
   },
 };

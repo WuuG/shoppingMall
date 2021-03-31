@@ -6,7 +6,7 @@
       class="good-item"
       @click="toDetail(item)"
     >
-      <img :src="item.show.img" alt="" @load="imageLoad" />
+      <img :src="imageUrl(item)" alt="" @load="imageLoad" />
       <div class="good-info">
         <p>{{ item.title }}</p>
         <span class="price">{{ item.orgPrice }}</span>
@@ -32,6 +32,9 @@ export default {
     },
     toDetail(item) {
       this.$router.push("/detail/" + item.iid);
+    },
+    imageUrl(item) {
+      return item.show ? item.show.img : item.image;
     },
   },
 };
