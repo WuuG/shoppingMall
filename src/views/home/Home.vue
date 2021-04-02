@@ -44,14 +44,13 @@ import navBar from "components/common/navbar/NavBar";
 import tabCtrl from "components/content/tabCtrl/TabCtrl";
 import goods from "components/content/goods/Goods";
 import Scroll from "../../components/common/betterScroll/Scroll.vue";
-import ToTop from "../../components/common/toTop/ToTop";
 
 import homeSwiper from "./childComps/HomeSwiper";
 import homeRecommend from "./childComps/HomeRecommend";
 import weekPop from "./childComps/WeekPop";
 
 import { getHomeDatas, getHomeGoods } from "network/home.js";
-import { scrollMix } from "common/mixin";
+import { scrollMix, toTop } from "common/mixin";
 
 export default {
   name: "home",
@@ -66,20 +65,18 @@ export default {
       },
       currentIndex: 0, //根据currentIndex来判断进行tab选项。
       tabTypes: ["pop", "new", "sell"], //用以判断getgoods的类别，进行展示。
-      toTopShow: false, // 返回按钮的显示。
       tabCtrlY: 0, //tabCtrl与页面顶部的距离
       tabCtrlFlag: true, //用以测量tabCtrlY时，不用重复操作
       tabIsShow: false, //tabCtrl是否显示。
       tabCtrlItemY: [], //每个tabCtrl对应的滚动距离
     };
   },
-  mixins: [scrollMix],
+  mixins: [scrollMix, toTop],
   components: {
     navBar,
     tabCtrl,
     goods,
     Scroll,
-    ToTop,
     homeSwiper,
     homeRecommend,
     weekPop,
@@ -157,9 +154,6 @@ export default {
     scrolling(pos) {
       this.toTopShow = -pos.y > this.tabCtrlY * 2 ? true : false;
       this.tabIsShow = -pos.y > this.tabCtrlY ? true : false;
-    },
-    toPos(x, y, time = 500) {
-      this.$refs.scroll.scrollTo(x, y, time);
     },
     setTabCtrlY() {
       if (this.$refs.tabCtrl && this.tabCtrlFlag) {

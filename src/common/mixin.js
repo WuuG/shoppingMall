@@ -1,5 +1,7 @@
 
 import Goods from "components/content/goods/Goods";
+import ToTop from "components/common/toTop/ToTop";
+
 import { debounce } from "common/utils";
 
 export const scrollMix = {
@@ -25,5 +27,21 @@ export const scrollMix = {
         this.$refs.scroll && refresh();
       };
     }
+  },
+}
+
+export const toTop = {
+  data() {
+    return {
+      toTopShow: false, // 返回按钮的显示。
+    }
+  },
+  components: {
+    ToTop,
+  },
+  methods: {
+    toPos(x, y, time = 500) {
+      this.$refs.scroll.scrollTo(x, y, time);
+    },
   },
 }

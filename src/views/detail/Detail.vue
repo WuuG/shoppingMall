@@ -8,7 +8,7 @@
       class="detail-content"
       ref="scroll"
       :probeType="3"
-      @scroll="detailScroll"
+      @scroll="scrolling"
     >
       <detail-swiper
         :images="topImages"
@@ -30,6 +30,7 @@
       ></detail-comment>
       <goods :good="detailRcommend" ref="detailRcommend"></goods>
     </scroll>
+    <to-top v-show="toTopShow" @click.native="toPos(0, 0)"></to-top>
   </div>
 </template>
 
@@ -50,7 +51,7 @@ import {
   shopInfo,
   getRecommend,
 } from "network/detail";
-import { scrollMix } from "common/mixin";
+import { scrollMix, toTop } from "common/mixin";
 import { debounce } from "common/utils";
 
 export default {
@@ -80,7 +81,7 @@ export default {
     DetailParams,
     DetailComment,
   },
-  mixins: [scrollMix],
+  mixins: [scrollMix, toTop],
   created() {
     this.iid = this.$route.params.iid;
     this.getDetailDatas(this.iid);
@@ -143,7 +144,7 @@ export default {
       //若是在这里调用this.navYDebounce函数，就失效了，因为此时每次图片发射的命令，都会重新将this.detaiNavBarYPush重新进行赋值吗？
       this.detailNavBarYPush();
     },
-    detailScroll(pos) {
+    scrolling(pos) {
       let posY = -pos.y;
       for (let i = 0; i < this.detailNavBarY.length - 1; i++) {
         if (
@@ -154,6 +155,7 @@ export default {
           this.currentIndex = i;
         }
       }
+      this.toTopShow = posY > 2000 ? true : false;
     },
   },
 };

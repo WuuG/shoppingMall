@@ -11,6 +11,7 @@ export default {};
 <style lang="less" scoped>
 div {
   position: fixed;
+  z-index: 3;
   right: -32px;
   bottom: 56px;
   img {
