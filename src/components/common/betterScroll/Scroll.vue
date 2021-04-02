@@ -80,8 +80,8 @@ export default {
     this.$nextTick(() => {
       this.scroll = new BScroll(this.$refs.wrapper, {
         click: true, //  防止tabCtrl无法使用
-        probeType: this.probeType,
-        pullUpLoad: this.pullUpLoad,
+        probeType: this.probeType, //  滚动后发送事件类型
+        pullUpLoad: this.pullUpLoad, //到底部后发送事件类型
       });
       //这里一定要传一个对象吗？不能直接传刷新这个方法出去吗？，得想想。直接用ref就可以取得这个scroll了
       // this.$emit("refresh", this.scroll);

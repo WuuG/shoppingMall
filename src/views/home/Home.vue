@@ -92,8 +92,6 @@ export default {
     this.getGoods("sell");
   },
   mounted() {
-    //这里还会使用返回回来的函数的，同时这个是个局部变量，理论上是会被销毁的，但是因为底下有个闭包所以之后使用的refresh还是同一个refresh,
-    this.debounceRefresh();
     // console.log(this.$bus["_events"]);
     this.$bus.$on("goodsImageLoad", this.Imagelistener);
   },

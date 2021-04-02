@@ -4,7 +4,12 @@
       :currentIndex="currentIndex"
       @navTitleClick="navTitleClick"
     ></detail-nav>
-    <scroll class="detail-content" ref="scroll">
+    <scroll
+      class="detail-content"
+      ref="scroll"
+      :probeType="3"
+      @scroll="detailScroll"
+    >
       <detail-swiper
         :images="topImages"
         @swiperImageLoad="scrollRefresh"
@@ -15,9 +20,15 @@
         :detailImages="detailImages"
         @detailImagesLoad="scrollRefresh"
       ></detail-images>
-      <detail-params :itemParams="itemParams"></detail-params>
-      <detail-comment :detailRate="detailRate"></detail-comment>
-      <goods :good="detailRcommend"></goods>
+      <detail-params
+        :itemParams="itemParams"
+        ref="detailParams"
+      ></detail-params>
+      <detail-comment
+        :detailRate="detailRate"
+        ref="detailComment"
+      ></detail-comment>
+      <goods :good="detailRcommend" ref="detailRcommend"></goods>
     </scroll>
   </div>
 </template>
@@ -40,6 +51,7 @@ import {
   getRecommend,
 } from "network/detail";
 import { scrollMix } from "common/mixin";
+import { debounce } from "common/utils";
 
 export default {
   name: "detail",
@@ -54,6 +66,8 @@ export default {
       itemParams: {}, //商品参数
       detailRate: {}, //用户评价
       detailRcommend: {}, //商品推荐模块
+      detailNavBarY: [], //nav对应模块的Y值。
+      detailNavBarYPush: null, //用于记录navY值的函数
     };
   },
   components: {
@@ -73,7 +87,7 @@ export default {
     this.getRecommend();
   },
   mounted() {
-    this.debounceRefresh();
+    this.navYDebounce();
   },
   methods: {
     /*
@@ -111,9 +125,35 @@ export default {
      */
     navTitleClick(index) {
       this.currentIndex = index;
+      this.$refs.scroll.scrollTo(0, -this.detailNavBarY[index], 500);
+    },
+    navYDebounce() {
+      const getDebounceY = debounce(() => {
+        this.detailNavBarY = [];
+        this.detailNavBarY.push(0);
+        this.detailNavBarY.push(this.$refs.detailParams.$el.offsetTop);
+        this.detailNavBarY.push(this.$refs.detailComment.$el.offsetTop);
+        this.detailNavBarY.push(this.$refs.detailRcommend.$el.offsetTop);
+        this.detailNavBarY.push(Number.MAX_VALUE); // 多加一个值，为了判断时，判断条件的统一
+      });
+      this.detailNavBarYPush = getDebounceY;
     },
     scrollRefresh() {
       this.Imagelistener();
+      //若是在这里调用this.navYDebounce函数，就失效了，因为此时每次图片发射的命令，都会重新将this.detaiNavBarYPush重新进行赋值吗？
+      this.detailNavBarYPush();
+    },
+    detailScroll(pos) {
+      let posY = -pos.y;
+      for (let i = 0; i < this.detailNavBarY.length - 1; i++) {
+        if (
+          this.currentIndex != i &&
+          posY >= this.detailNavBarY[i] &&
+          posY < this.detailNavBarY[i + 1]
+        ) {
+          this.currentIndex = i;
+        }
+      }
     },
   },
 };
