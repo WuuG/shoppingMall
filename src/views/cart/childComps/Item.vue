@@ -40,6 +40,7 @@ export default {
       },
     },
   },
+
   methods: {
     clickSelect(index) {
       this.$store.commit("setSelect", index);

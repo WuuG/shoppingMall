@@ -11,4 +11,10 @@ export default {
   setSelect(state, index) {
     state.cart[index].select = !state.cart[index].select;
   },
+  selectAll(state, totalSelect) {
+    state.cart.forEach((element) => {
+      console.log(totalSelect);
+      element.select = totalSelect;
+    });
+  }
 }
