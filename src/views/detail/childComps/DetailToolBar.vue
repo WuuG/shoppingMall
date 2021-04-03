@@ -35,7 +35,7 @@ export default {
   methods: {
     addCart() {
       this.$store.dispatch(ADDTOCART, this.cartInfo).then((res) => {
-        this.$emit("addCart", res);
+        this.$toast.show(res);
         setTimeout(() => {
           this.toastShow = false;
         }, 2000);

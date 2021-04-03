@@ -9,16 +9,33 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      message: "",
+      isShow: false,
+      isShowFlag: true,
+    };
   },
-  props: {
-    message: {
-      type: String,
-      default: "这是默认的Toast",
-    },
-    isShow: {
-      type: Boolean,
-      default: false,
+  // props: {
+  //   message: {
+  //     type: String,
+  //     default: "这是默认的Toast",
+  //   },
+  //   isShow: {
+  //     type: Boolean,
+  //     default: false,
+  //   },
+  methods: {
+    show(message, duration = 2000) {
+      if (this.isShowFlag) {
+        this.isShowFlag = false;
+        console.log(timer);
+        this.message = message;
+        this.isShow = true;
+        setTimeout(() => {
+          this.isShow = false;
+          this.isShowFlag = true;
+        }, duration);
+      }
     },
   },
 };

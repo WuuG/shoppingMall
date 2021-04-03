@@ -31,8 +31,8 @@
       <goods :good="detailRcommend" ref="detailRcommend"></goods>
     </scroll>
     <to-top v-show="toTopShow" @click.native="toPos(0, 0)"></to-top>
-    <detail-tool-bar :cartInfo="detailCartInfo" @addCart="addCart" />
-    <toast :message="message" :isShow="toastShow"></toast>
+    <detail-tool-bar :cartInfo="detailCartInfo" />
+    <!-- <toast :message="message" :isShow="toastShow"></toast> -->
   </div>
 </template>
 
@@ -46,7 +46,7 @@ import DetailParams from "./childComps/DetailParams";
 import DetailComment from "./childComps/DetailComment";
 import DetailToolBar from "./childComps/DetailToolBar";
 
-import Toast from "components/common/toast/Toast";
+// import Toast from "components/common/toast/Toast";
 import Scroll from "components/common/betterScroll/Scroll";
 
 import {
@@ -75,8 +75,8 @@ export default {
       detailNavBarY: [], //nav对应模块的Y值。
       detailNavBarYPush: null, //用于记录navY值的函数
       detailCartInfo: {}, //购物车的信息
-      message: "",
-      toastShow: false,
+      // message: "",
+      // toastShow: false,
     };
   },
   components: {
@@ -89,7 +89,7 @@ export default {
     DetailParams,
     DetailComment,
     DetailToolBar,
-    Toast,
+    // Toast,
   },
   mixins: [scrollMix, toTop],
   created() {
@@ -170,13 +170,13 @@ export default {
       }
       this.toTopShow = posY > 2000 ? true : false;
     },
-    addCart(message) {
-      this.message = message;
-      this.toastShow = true;
-      setTimeout(() => {
-        this.toastShow = false;
-      }, 2000);
-    },
+    // addCart(message) {
+    //   this.message = message;
+    //   this.toastShow = true;
+    //   setTimeout(() => {
+    //     this.toastShow = false;
+    //   }, 2000);
+    // },
   },
 };
 </script>
