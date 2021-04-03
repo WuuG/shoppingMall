@@ -38,9 +38,11 @@ export default {
       cart: (state) => state.cart,
     }),
     totalPrice() {
-      return this.cart.reduce((pre, cur) => {
-        return pre + cur.count * cur.lowNowPrice;
-      }, 0);
+      return this.cart
+        .filter((item) => item.select)
+        .reduce((pre, cur) => {
+          return pre + cur.count * cur.lowNowPrice;
+        }, 0);
     },
     //计算属性里的值不要修改，若要修改请使用setter
     isSelectAll() {
