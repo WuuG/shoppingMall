@@ -4,7 +4,7 @@
       <template v-slot:swiper>
         <swiper-item v-for="item in images" :key="item.id">
           <template v-slot:swiperItem>
-            <img :src="item" alt="图片加载中" />
+            <img :src="item" alt="图片加载中" @load="swiperImageLoad" />
           </template>
         </swiper-item>
       </template>
@@ -17,7 +17,9 @@ import { swiper, swiperItem } from "components/common/swiper/swiper";
 export default {
   name: "detailSwiper",
   data() {
-    return {};
+    return {
+      swiperImageFlag: true, //仅仅发射一次emit
+    };
   },
   props: {
     images: {
@@ -31,12 +33,19 @@ export default {
     swiper,
     swiperItem,
   },
+  methods: {
+    swiperImageLoad() {
+      if (this.swiperImageFlag) {
+        this.$emit("swiperImageLoad");
+        this.swiperImageFlag = false;
+      }
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
 .detail-swiper {
-  padding-top: 44px;
   width: 100%;
   height: 400px;
 }
