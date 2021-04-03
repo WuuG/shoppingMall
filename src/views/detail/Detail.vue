@@ -31,6 +31,7 @@
       <goods :good="detailRcommend" ref="detailRcommend"></goods>
     </scroll>
     <to-top v-show="toTopShow" @click.native="toPos(0, 0)"></to-top>
+    <detail-tool-bar></detail-tool-bar>
   </div>
 </template>
 
@@ -42,6 +43,7 @@ import ShopInfo from "./childComps/ShopInfo";
 import DetailImages from "./childComps/DetailImage";
 import DetailParams from "./childComps/DetailParams";
 import DetailComment from "./childComps/DetailComment";
+import DetailToolBar from "./childComps/DetailToolBar";
 
 import Scroll from "components/common/betterScroll/Scroll";
 
@@ -80,6 +82,7 @@ export default {
     DetailImages,
     DetailParams,
     DetailComment,
+    DetailToolBar,
   },
   mixins: [scrollMix, toTop],
   created() {
