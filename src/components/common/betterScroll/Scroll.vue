@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     refresh() {
-      console.log("refresh");
+      // console.log("refresh");
       this.scroll.refresh();
       return "success";
     },

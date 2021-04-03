@@ -12,14 +12,29 @@
       <span class="icon"></span>
       <span>收藏</span>
     </div>
-    <div class="add-cart">加入购物车</div>
+    <div class="add-cart" @click="addCart">加入购物车</div>
     <div class="tool-bar-buy">购买</div>
   </div>
 </template>
 
 <script>
+import { ADDTOCART } from "store/const";
+
 export default {
   name: "DetailToolBar",
+  props: {
+    cartInfo: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+  methods: {
+    addCart() {
+      this.$store.dispatch(ADDTOCART, this.cartInfo);
+    },
+  },
 };
 </script>
 

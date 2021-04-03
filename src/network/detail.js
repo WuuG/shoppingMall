@@ -21,6 +21,7 @@ export class itemInfo {
     this.sales = columns[0];
     this.collection = columns[1];
     this.services = shopInfo.services;
+    this.desc = item.desc;
   }
 }
 export class shopInfo {
@@ -34,5 +35,14 @@ export class shopInfo {
     this.shopLogo = shopInfo.shopLogo;
     this.shopUrl = shopInfo.shopUrl;
     this.shopId = shopInfo.shopId;
+  }
+}
+export class detailCartInfo {
+  constructor(itemInfo) {
+    this.iid = itemInfo.iid;
+    this.lowNowPrice = itemInfo.lowNowPrice;
+    this.desc = itemInfo.desc;
+    this.title = itemInfo.title;
+    this.image = itemInfo.topImages[0];
   }
 }

@@ -31,7 +31,7 @@
       <goods :good="detailRcommend" ref="detailRcommend"></goods>
     </scroll>
     <to-top v-show="toTopShow" @click.native="toPos(0, 0)"></to-top>
-    <detail-tool-bar></detail-tool-bar>
+    <detail-tool-bar :cartInfo="detailCartInfo" />
   </div>
 </template>
 
@@ -52,6 +52,7 @@ import {
   itemInfo,
   shopInfo,
   getRecommend,
+  detailCartInfo,
 } from "network/detail";
 import { scrollMix, toTop } from "common/mixin";
 import { debounce } from "common/utils";
@@ -71,6 +72,7 @@ export default {
       detailRcommend: {}, //商品推荐模块
       detailNavBarY: [], //nav对应模块的Y值。
       detailNavBarYPush: null, //用于记录navY值的函数
+      detailCartInfo: {},
     };
   },
   components: {
@@ -116,7 +118,8 @@ export default {
         this.itemParams = data.itemParams;
         //7.评价
         this.detailRate = data.rate.list ? data.rate.list[0] : {};
-        //
+        //8.需要传给购物车的数据
+        this.detailCartInfo = new detailCartInfo(data.itemInfo);
       });
     },
     getRecommend() {
