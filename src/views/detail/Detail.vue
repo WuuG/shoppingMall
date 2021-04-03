@@ -31,7 +31,8 @@
       <goods :good="detailRcommend" ref="detailRcommend"></goods>
     </scroll>
     <to-top v-show="toTopShow" @click.native="toPos(0, 0)"></to-top>
-    <detail-tool-bar :cartInfo="detailCartInfo" />
+    <detail-tool-bar :cartInfo="detailCartInfo" @addCart="addCart" />
+    <toast :message="message" :isShow="toastShow"></toast>
   </div>
 </template>
 
@@ -45,6 +46,7 @@ import DetailParams from "./childComps/DetailParams";
 import DetailComment from "./childComps/DetailComment";
 import DetailToolBar from "./childComps/DetailToolBar";
 
+import Toast from "components/common/toast/Toast";
 import Scroll from "components/common/betterScroll/Scroll";
 
 import {
@@ -72,7 +74,9 @@ export default {
       detailRcommend: {}, //商品推荐模块
       detailNavBarY: [], //nav对应模块的Y值。
       detailNavBarYPush: null, //用于记录navY值的函数
-      detailCartInfo: {},
+      detailCartInfo: {}, //购物车的信息
+      message: "",
+      toastShow: false,
     };
   },
   components: {
@@ -85,6 +89,7 @@ export default {
     DetailParams,
     DetailComment,
     DetailToolBar,
+    Toast,
   },
   mixins: [scrollMix, toTop],
   created() {
@@ -145,11 +150,13 @@ export default {
       });
       this.detailNavBarYPush = getDebounceY;
     },
+    //BScroll的refresh方法
     scrollRefresh() {
       this.Imagelistener();
       //若是在这里调用this.navYDebounce函数，就失效了，因为此时每次图片发射的命令，都会重新将this.detaiNavBarYPush重新进行赋值吗？
       this.detailNavBarYPush();
     },
+    //监听滚动事件，并修改navbar对应的active
     scrolling(pos) {
       let posY = -pos.y;
       for (let i = 0; i < this.detailNavBarY.length - 1; i++) {
@@ -162,6 +169,13 @@ export default {
         }
       }
       this.toTopShow = posY > 2000 ? true : false;
+    },
+    addCart(message) {
+      this.message = message;
+      this.toastShow = true;
+      setTimeout(() => {
+        this.toastShow = false;
+      }, 2000);
     },
   },
 };

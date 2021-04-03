@@ -21,6 +21,9 @@
 import { ADDTOCART } from "store/const";
 export default {
   name: "DetailToolBar",
+  data() {
+    return {};
+  },
   props: {
     cartInfo: {
       type: Object,
@@ -31,7 +34,12 @@ export default {
   },
   methods: {
     addCart() {
-      this.$store.dispatch(ADDTOCART, this.cartInfo);
+      this.$store.dispatch(ADDTOCART, this.cartInfo).then((res) => {
+        this.$emit("addCart", res);
+        setTimeout(() => {
+          this.toastShow = false;
+        }, 2000);
+      });
     },
   },
 };
