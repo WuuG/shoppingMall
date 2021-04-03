@@ -54,6 +54,7 @@ export default {
 <style lang="less" scoped>
 .detail-nav-bar {
   text-align: center;
+  background-color: #fff;
   .mid {
     display: flex;
     span {

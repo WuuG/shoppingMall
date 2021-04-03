@@ -20,7 +20,7 @@ export default {
     goodsItem,
   },
   mounted() {
-    console.log(this.good);
+    // console.log(this.good);
   },
 };
 </script>
