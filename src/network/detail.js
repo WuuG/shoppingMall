@@ -45,5 +45,6 @@ export class detailCartInfo {
     this.title = itemInfo.title;
     this.image = itemInfo.topImages[0];
     this.count = 0;
+    this.select = 0;
   }
 }

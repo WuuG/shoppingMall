@@ -7,5 +7,8 @@ export default {
     //1.解决方法，在push之前，就需要存在count这个参数。
     //2.我觉得还有一种办法：取出来自己进行双向绑定。
     item.count++;
-  }
+  },
+  setSelect(state, index) {
+    state.cart[index].select = !state.cart[index].select;
+  },
 }

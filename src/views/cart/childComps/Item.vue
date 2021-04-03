@@ -1,6 +1,15 @@
 <template>
   <div>
-    <section v-for="item in cart" :key="item.id" class="cart-item">
+    <section v-for="(item, index) in cart" :key="item.id" class="cart-item">
+      <div class="item-select">
+        <img
+          src="~assets/img/cart/tick.svg"
+          alt=""
+          :class="{ active: item.select }"
+          @click="clickSelect(index)"
+          @load="cartImgLoad"
+        />
+      </div>
       <div class="cart-item-img">
         <img :src="item.image" alt="" />
       </div>
@@ -21,22 +30,48 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 export default {
-  name: "Cart",
-  computed: {
-    ...mapState({
-      cart: (state) => state.cart,
-    }),
+  name: "CartItem",
+  props: {
+    cart: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
+  methods: {
+    clickSelect(index) {
+      this.$store.commit("setSelect", index);
+    },
+    cartImgLoad() {
+      this.$emit("cartImgLoad");
+    },
   },
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .cart-item {
   display: flex;
   padding: 10px;
   border-bottom: 1px solid #ececec;
+  .item-select {
+    padding-right: 5px;
+    display: flex;
+    flex: 0.5;
+    img {
+      align-self: center;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #aaa;
+    }
+  }
+  .active {
+    background-color: @tint-color;
+    border: 2px solid @tint-color !important;
+  }
   .cart-item-img {
     flex: 1.4;
     padding-right: 10px;

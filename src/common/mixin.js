@@ -1,6 +1,7 @@
 
 import Goods from "components/content/goods/Goods";
 import ToTop from "components/common/toTop/ToTop";
+import Scroll from "../components/common/betterScroll/Scroll.vue"
 
 import { debounce } from "common/utils";
 
@@ -12,6 +13,7 @@ export const scrollMix = {
   },
   components: {
     Goods,
+    Scroll
   },
   mounted() {
     this.debounceRefresh();
