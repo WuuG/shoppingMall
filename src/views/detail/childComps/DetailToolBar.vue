@@ -19,7 +19,6 @@
 
 <script>
 import { ADDTOCART } from "store/const";
-
 export default {
   name: "DetailToolBar",
   props: {
@@ -44,10 +43,11 @@ export default {
   bottom: 0px;
   z-index: 3;
   display: flex;
+  background-color: #fff;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
   width: 100%;
   height: 49px;
   text-align: center;
-  background-color: #fff;
   .tool-bar-item {
     padding-top: 2px;
     flex: 1;
