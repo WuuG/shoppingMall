@@ -6,7 +6,7 @@
       class="good-item"
       @click="toDetail(item)"
     >
-      <img :src="imageUrl(item)" alt="" @load="imageLoad" />
+      <img v-lazy="imageUrl(item)" alt="" @load="imageLoad" />
       <div class="good-info">
         <p>{{ item.title }}</p>
         <span class="price">{{ item.orgPrice }}</span>
