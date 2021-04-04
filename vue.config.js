@@ -2,6 +2,9 @@ const path = require("path");
 
 //会与默认配置合并
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/shoppingMall/'
+    : '/',
   //进行别名的设置
   configureWebpack: {
     resolve: {
